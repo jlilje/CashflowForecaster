@@ -1,0 +1,440 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6E73E5F9C2DCDD0808185A5F /* libPods-CashflowForecaster.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3F0411D9E80D7CF12E6891 /* libPods-CashflowForecaster.a */; };
+		879EACC51D3D1F5A0004028E /* CashflowEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 879EACC41D3D1F5A0004028E /* CashflowEvent.m */; };
+		879EACC81D3D62AF0004028E /* RecurrenceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 879EACC71D3D62AF0004028E /* RecurrenceVC.m */; };
+		879EACCD1D4149B40004028E /* PaymentSeries.m in Sources */ = {isa = PBXBuildFile; fileRef = 879EACCC1D4149B40004028E /* PaymentSeries.m */; };
+		87B6FFD81D47B05500336FB7 /* CashflowEventVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6FFD71D47B05500336FB7 /* CashflowEventVC.m */; };
+		87E79A571D4BC3AB00289A70 /* red-arrow-curved-png-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 87E79A561D4BC3AB00289A70 /* red-arrow-curved-png-23.png */; };
+		87E79A591D4BC3D000289A70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E79A581D4BC3D000289A70 /* Assets.xcassets */; };
+		87E79A5B1D4BC53A00289A70 /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 87E79A5A1D4BC53A00289A70 /* arrow_right.png */; };
+		87E79A5D1D4BC69300289A70 /* red-arrow-right-md.png in Resources */ = {isa = PBXBuildFile; fileRef = 87E79A5C1D4BC69300289A70 /* red-arrow-right-md.png */; };
+		87F0CEE31D42782F00AEB432 /* CashflowEventListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F0CEE21D42782F00AEB432 /* CashflowEventListTVC.m */; };
+		87FD59801D381B18008248E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FD597F1D381B18008248E6 /* main.m */; };
+		87FD59831D381B18008248E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FD59821D381B18008248E6 /* AppDelegate.m */; };
+		87FD598C1D381B18008248E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87FD598A1D381B18008248E6 /* Main.storyboard */; settings = {ASSET_TAGS = (CashEvents, ); }; };
+		87FD598E1D381B18008248E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87FD598D1D381B18008248E6 /* Assets.xcassets */; };
+		87FD599D1D3827B7008248E6 /* AssetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FD599C1D3827B7008248E6 /* AssetVC.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0B3F0411D9E80D7CF12E6891 /* libPods-CashflowForecaster.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CashflowForecaster.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E28B64964C36C9531DC1E18 /* Pods-CashflowForecaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashflowForecaster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CashflowForecaster/Pods-CashflowForecaster.debug.xcconfig"; sourceTree = "<group>"; };
+		879EACC31D3D1F5A0004028E /* CashflowEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashflowEvent.h; sourceTree = "<group>"; };
+		879EACC41D3D1F5A0004028E /* CashflowEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashflowEvent.m; sourceTree = "<group>"; };
+		879EACC61D3D62AF0004028E /* RecurrenceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurrenceVC.h; sourceTree = "<group>"; };
+		879EACC71D3D62AF0004028E /* RecurrenceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurrenceVC.m; sourceTree = "<group>"; };
+		879EACCB1D4149B40004028E /* PaymentSeries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSeries.h; sourceTree = "<group>"; };
+		879EACCC1D4149B40004028E /* PaymentSeries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSeries.m; sourceTree = "<group>"; };
+		87B6FFD61D47B05500336FB7 /* CashflowEventVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashflowEventVC.h; sourceTree = "<group>"; };
+		87B6FFD71D47B05500336FB7 /* CashflowEventVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashflowEventVC.m; sourceTree = "<group>"; };
+		87E79A561D4BC3AB00289A70 /* red-arrow-curved-png-23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-arrow-curved-png-23.png"; sourceTree = "<group>"; };
+		87E79A581D4BC3D000289A70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		87E79A5A1D4BC53A00289A70 /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
+		87E79A5C1D4BC69300289A70 /* red-arrow-right-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-arrow-right-md.png"; sourceTree = "<group>"; };
+		87F0CEE11D42782F00AEB432 /* CashflowEventListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashflowEventListTVC.h; sourceTree = "<group>"; };
+		87F0CEE21D42782F00AEB432 /* CashflowEventListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashflowEventListTVC.m; sourceTree = "<group>"; };
+		87FD597B1D381B18008248E6 /* CashflowForecaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CashflowForecaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		87FD597F1D381B18008248E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		87FD59811D381B18008248E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		87FD59821D381B18008248E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		87FD598B1D381B18008248E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		87FD598D1D381B18008248E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		87FD59921D381B18008248E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87FD599B1D3827B7008248E6 /* AssetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetVC.h; sourceTree = "<group>"; };
+		87FD599C1D3827B7008248E6 /* AssetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetVC.m; sourceTree = "<group>"; };
+		89FA1940DFD14AA2C91EE6A3 /* Pods-CashflowForecaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashflowForecaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-CashflowForecaster/Pods-CashflowForecaster.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87FD59781D381B18008248E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E73E5F9C2DCDD0808185A5F /* libPods-CashflowForecaster.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6F5D67A8AAC3758BEC9049B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0B3F0411D9E80D7CF12E6891 /* libPods-CashflowForecaster.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		879EACC91D3D6C6A0004028E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				87FD599B1D3827B7008248E6 /* AssetVC.h */,
+				87FD599C1D3827B7008248E6 /* AssetVC.m */,
+				87B6FFD61D47B05500336FB7 /* CashflowEventVC.h */,
+				87B6FFD71D47B05500336FB7 /* CashflowEventVC.m */,
+				879EACC61D3D62AF0004028E /* RecurrenceVC.h */,
+				879EACC71D3D62AF0004028E /* RecurrenceVC.m */,
+				87F0CEE11D42782F00AEB432 /* CashflowEventListTVC.h */,
+				87F0CEE21D42782F00AEB432 /* CashflowEventListTVC.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		879EACCA1D3D6CD30004028E /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				879EACCB1D4149B40004028E /* PaymentSeries.h */,
+				879EACCC1D4149B40004028E /* PaymentSeries.m */,
+				879EACC31D3D1F5A0004028E /* CashflowEvent.h */,
+				879EACC41D3D1F5A0004028E /* CashflowEvent.m */,
+			);
+			name = Objects;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		87FD59721D381B18008248E6 = {
+			isa = PBXGroup;
+			children = (
+				87FD597D1D381B18008248E6 /* CashflowForecaster */,
+				87FD597C1D381B18008248E6 /* Products */,
+				D2B871C38C07011A77232ACA /* Pods */,
+				6F5D67A8AAC3758BEC9049B4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		87FD597C1D381B18008248E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87FD597B1D381B18008248E6 /* CashflowForecaster.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87FD597D1D381B18008248E6 /* CashflowForecaster */ = {
+			isa = PBXGroup;
+			children = (
+				879EACCA1D3D6CD30004028E /* Objects */,
+				879EACC91D3D6C6A0004028E /* View Controllers */,
+				87FD598A1D381B18008248E6 /* Main.storyboard */,
+				87E79A5C1D4BC69300289A70 /* red-arrow-right-md.png */,
+				87E79A5A1D4BC53A00289A70 /* arrow_right.png */,
+				87FD598D1D381B18008248E6 /* Assets.xcassets */,
+				87E79A561D4BC3AB00289A70 /* red-arrow-curved-png-23.png */,
+				87E79A581D4BC3D000289A70 /* Assets.xcassets */,
+				87FD59921D381B18008248E6 /* Info.plist */,
+				87FD59811D381B18008248E6 /* AppDelegate.h */,
+				87FD59821D381B18008248E6 /* AppDelegate.m */,
+				87FD597E1D381B18008248E6 /* Supporting Files */,
+			);
+			path = CashflowForecaster;
+			sourceTree = "<group>";
+		};
+		87FD597E1D381B18008248E6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				87FD597F1D381B18008248E6 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2B871C38C07011A77232ACA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0E28B64964C36C9531DC1E18 /* Pods-CashflowForecaster.debug.xcconfig */,
+				89FA1940DFD14AA2C91EE6A3 /* Pods-CashflowForecaster.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		87FD597A1D381B18008248E6 /* CashflowForecaster */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87FD59951D381B18008248E6 /* Build configuration list for PBXNativeTarget "CashflowForecaster" */;
+			buildPhases = (
+				67A6B5A508F2EDF5A2A5F9E0 /* [CP] Check Pods Manifest.lock */,
+				87FD59771D381B18008248E6 /* Sources */,
+				87FD59781D381B18008248E6 /* Frameworks */,
+				87FD59791D381B18008248E6 /* Resources */,
+				923F8297F75CA15B28DFFF24 /* [CP] Embed Pods Frameworks */,
+				9B3624AA51CF5E2974BD9BAD /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CashflowForecaster;
+			productName = CashflowForecaster;
+			productReference = 87FD597B1D381B18008248E6 /* CashflowForecaster.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87FD59731D381B18008248E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				KnownAssetTags = (
+					CashEvents,
+					ListCFItems,
+				);
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Detroit Labs";
+				TargetAttributes = {
+					87FD597A1D381B18008248E6 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 87FD59761D381B18008248E6 /* Build configuration list for PBXProject "CashflowForecaster" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 87FD59721D381B18008248E6;
+			productRefGroup = 87FD597C1D381B18008248E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87FD597A1D381B18008248E6 /* CashflowForecaster */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		87FD59791D381B18008248E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87FD598E1D381B18008248E6 /* Assets.xcassets in Resources */,
+				87E79A5D1D4BC69300289A70 /* red-arrow-right-md.png in Resources */,
+				87E79A5B1D4BC53A00289A70 /* arrow_right.png in Resources */,
+				87E79A571D4BC3AB00289A70 /* red-arrow-curved-png-23.png in Resources */,
+				87E79A591D4BC3D000289A70 /* Assets.xcassets in Resources */,
+				87FD598C1D381B18008248E6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		67A6B5A508F2EDF5A2A5F9E0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		923F8297F75CA15B28DFFF24 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CashflowForecaster/Pods-CashflowForecaster-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9B3624AA51CF5E2974BD9BAD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CashflowForecaster/Pods-CashflowForecaster-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87FD59771D381B18008248E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				879EACC81D3D62AF0004028E /* RecurrenceVC.m in Sources */,
+				87FD599D1D3827B7008248E6 /* AssetVC.m in Sources */,
+				87B6FFD81D47B05500336FB7 /* CashflowEventVC.m in Sources */,
+				87FD59831D381B18008248E6 /* AppDelegate.m in Sources */,
+				87FD59801D381B18008248E6 /* main.m in Sources */,
+				879EACCD1D4149B40004028E /* PaymentSeries.m in Sources */,
+				87F0CEE31D42782F00AEB432 /* CashflowEventListTVC.m in Sources */,
+				879EACC51D3D1F5A0004028E /* CashflowEvent.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		87FD598A1D381B18008248E6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				87FD598B1D381B18008248E6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		87FD59931D381B18008248E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		87FD59941D381B18008248E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		87FD59961D381B18008248E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E28B64964C36C9531DC1E18 /* Pods-CashflowForecaster.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CashflowForecaster/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.detroitlabs.CashflowForecaster;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		87FD59971D381B18008248E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89FA1940DFD14AA2C91EE6A3 /* Pods-CashflowForecaster.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CashflowForecaster/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.detroitlabs.CashflowForecaster;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87FD59761D381B18008248E6 /* Build configuration list for PBXProject "CashflowForecaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87FD59931D381B18008248E6 /* Debug */,
+				87FD59941D381B18008248E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87FD59951D381B18008248E6 /* Build configuration list for PBXNativeTarget "CashflowForecaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87FD59961D381B18008248E6 /* Debug */,
+				87FD59971D381B18008248E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 87FD59731D381B18008248E6 /* Project object */;
+}
