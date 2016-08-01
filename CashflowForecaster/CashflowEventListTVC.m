@@ -12,19 +12,22 @@
 #import "CashflowEventVC.h"
 
 @interface CashflowEventListTVC ()
-@property NSMutableArray *cashflowEventsArray;
-@property CashflowEvent *selectedCashflowEvent;
+//@property NSMutableArray *cashflowEventsArray;
+//@property CashflowEvent *selectedCashflowEvent;
 @end
 
 @implementation CashflowEventListTVC
 
-NSArray *storedCashflowEventsArray;
+NSMutableArray *storedCashflowEventsArray;
 
-NSArray *cashflowEventsArray;
+NSMutableArray *cashflowEventsArray;
+
+CashflowEvent *selectedCashflowEvent;
 
 -(void) loadCashflowEvents
 {
     NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
+    
     CashflowEvent *cashflowEvent1 = [[CashflowEvent alloc] init];
     CashflowEvent *cashflowEvent2 = [[CashflowEvent alloc] init];
     CashflowEvent *cashflowEvent3 = [[CashflowEvent alloc] init];
@@ -39,8 +42,7 @@ NSArray *cashflowEventsArray;
     [comps setDay:1];
     [comps setMonth:6];
     [comps setYear:2016];
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDate *sdate1 = [gregorian dateFromComponents:comps];
     [comps setMonth:9];
     NSDate *edate1 = [gregorian dateFromComponents:comps];
@@ -80,13 +82,13 @@ NSArray *cashflowEventsArray;
     cashflowEvent3.alertTime = @"None";
     //cashflowEvent3.paymentSeries = [PaymentSeries ]
     
-    [self.cashflowEventsArray addObject:cashflowEvent1];
-    [self.cashflowEventsArray addObject:cashflowEvent2];
-    [self.cashflowEventsArray addObject:cashflowEvent3];
+    [cashflowEventsArray addObject:cashflowEvent1];
+    [cashflowEventsArray addObject:cashflowEvent2];
+    [cashflowEventsArray addObject:cashflowEvent3];
 }
 
 - (IBAction)Add:(id)sender {
-    NSLog(@" in new add action");
+    NSLog(@"running in \"Add\" method");
 }
 
 - (void)viewDidLoad
@@ -102,28 +104,32 @@ NSArray *cashflowEventsArray;
     
     if (storedCashflowEventsArray == NULL)
     {
+        NSLog(@"creating a new stored cashflow event array...");
         storedCashflowEventsArray = [[NSMutableArray alloc] init];
     }
     
     if (cashflowEventsArray == NULL)
     {
+        NSLog(@"creating a new dynaic cashflow event array...");
         cashflowEventsArray = [[NSMutableArray alloc] init];
     }
     
-    if ([storedCashflowEventsArray count] == 0 && [self.cashflowEventsArray count] == 0)
+    if ([storedCashflowEventsArray count] == 0 && [cashflowEventsArray count] == 0)
     {
         //if both the persisted and non-persisted CFE arrays are empty, load the test CFEs into the array and continue
-        NSLog (@"both CFE arrays are empty, will load test CFEs");
+        NSLog (@"loading test CFEs (both CFE arrays are empty)...");
         [self loadCashflowEvents];
     }
     else if ([storedCashflowEventsArray count] == 0)
     {
+        NSLog(@"inside viewDidLoad method, with condition of stored CFE array is the only empty array");
         //if only the stored array is empty, continue using the unpersisted CFE Array and (eventually) persist it
     }
     else
     {
         //if only the unpersisted array is empty, load it to the dynamic CFE Array... this will be the normal startup process
-        self.cashflowEventsArray = [storedCashflowEventsArray mutableCopy];
+        NSLog(@"inside viewDidLoad method, with condition of dynamic CFE array is the only empty array");
+        cashflowEventsArray = [storedCashflowEventsArray mutableCopy];
     }
 }
 
@@ -142,37 +148,23 @@ NSArray *cashflowEventsArray;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.cashflowEventsArray count];
+    return [cashflowEventsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listPrototypeCell" forIndexPath:indexPath];
     
-    CashflowEvent *cashflowEvent = [self.cashflowEventsArray objectAtIndex:indexPath.row];
+    CashflowEvent *cashflowEvent = [cashflowEventsArray objectAtIndex:indexPath.row];
  
     cell.textLabel.text = cashflowEvent.name;
+    
+    NSLog(@"adding CFE %@ to TVC list", cashflowEvent.name);
 
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    NSString *cellText = cell.textLabel.text;
-//    NSLog(@"cell selected is index # %lu, %@", [self.tableView indexPathForSelectedRow].row, cellText);
-//    _selectedCashflowEvent = _cashflowEventsArray[[self.tableView indexPathForSelectedRow].row];
-//    NSLog(@"in didSelectRowAtIndex method, the _selectedCashflowEvent is %@", _selectedCashflowEvent);
-//    
-//    SharedCashEvent *selectedTruck = [SharedTruck makeTruck];
-//    selectedTruck->truckName = truckToPass.truckName;
-//    selectedTruck->andTruckMenu = truckToPass.truckMenu;
-//    selectedTruck->andTruckBlurb = truckToPass.truckBlurb;
-//    selectedTruck->andTruckSchedule.scheduleStartTime = truckToPass.truckSchedule.scheduleStartTime;
-//    selectedTruck->andTruckSchedule.scheduleEndTime = truckToPass.truckSchedule.scheduleEndTime;
-//    selectedTruck->andTruckSchedule.scheduleLocation = truckToPass.truckSchedule.scheduleLocation;
-//    
-//    _checkedCell = indexPath;
-//    [tableView reloadData];
 }
 
 // Override to support conditional editing of the table view.
@@ -215,17 +207,17 @@ NSArray *cashflowEventsArray;
 {
     NSLog(@"sender id is \"%@\"", segue.identifier);
     
-    NSLog(@"the CFE array going out is %@", self.cashflowEventsArray);
+    NSLog(@"the CFE array going out is %@", cashflowEventsArray);
     
     if ([segue.identifier isEqualToString:@"Add..."])
     {
-        _selectedCashflowEvent = [[CashflowEvent alloc] init];
+        selectedCashflowEvent = [[CashflowEvent alloc] init];
         
-        [self.cashflowEventsArray addObject:_selectedCashflowEvent];
+        [cashflowEventsArray addObject:selectedCashflowEvent];
         
         CashflowEventVC *vc = [segue destinationViewController];
         
-        [vc editCashflowEvent:_selectedCashflowEvent];
+        [vc editCashflowEvent:selectedCashflowEvent];
     }
     else //if ([segue.identifier isEqualToString:@"Edit"])
     {
@@ -233,24 +225,24 @@ NSArray *cashflowEventsArray;
         // Then, get the destination view controller using [segue destinationViewController].
         // Finally, pass the selected cashflow event to the destination view controller.
         
-        _selectedCashflowEvent = _cashflowEventsArray[[self.tableView indexPathForSelectedRow].row];
+        selectedCashflowEvent = cashflowEventsArray[[self.tableView indexPathForSelectedRow].row];
         
         CashflowEventVC *vc = [segue destinationViewController];
         
-        [vc editCashflowEvent:_selectedCashflowEvent];
+        [vc editCashflowEvent:selectedCashflowEvent];
     }
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    //[self.tableView reloadData];
-    NSLog(@"table has reloaded");
+    [self.tableView reloadData];
+    NSLog(@"reloading table...");
 }
 
 -(IBAction)unwindToCashflowEventTVC:(UIStoryboardSegue *)segue
 {
-    NSLog(@"unwinding from CashflowEventVC to CashflowEventTVC");
-    NSLog(@"the new amount from the CFE veiw controller is %@", _selectedCashflowEvent.amount);
+    NSLog(@"unwinding from CashflowEventVC to CashflowEventTVC...");
+    //NSLog(@"the new amount from the CFE veiw controller is %@", selectedCashflowEvent.amount);
 }
 
 @end
