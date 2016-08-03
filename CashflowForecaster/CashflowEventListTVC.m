@@ -24,69 +24,6 @@ NSMutableArray *cashflowEventsArray;
 
 CashflowEvent *selectedCashflowEvent;
 
--(void) loadCashflowEvents
-{
-    NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
-    
-    CashflowEvent *cashflowEvent1 = [[CashflowEvent alloc] init];
-    CashflowEvent *cashflowEvent2 = [[CashflowEvent alloc] init];
-    CashflowEvent *cashflowEvent3 = [[CashflowEvent alloc] init];
-    
-    cashflowEvent1.type = @"Income";
-    cashflowEvent1.name = @"my paycheck";
-    cashflowEvent1.amount = [NSNumber numberWithFloat:555.00];
-    cashflowEvent1.recurrenceType = @"Weekly";
-    cashflowEvent1.recurrenceDetail = @"Friday";
-    
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setDay:1];
-    [comps setMonth:6];
-    [comps setYear:2016];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDate *sdate1 = [gregorian dateFromComponents:comps];
-    [comps setMonth:9];
-    NSDate *edate1 = [gregorian dateFromComponents:comps];
-    //  [comps release];
-    
-    cashflowEvent1.recurrenceStartDate = sdate1;
-    cashflowEvent1.recurrenceEndDate = edate1;
-    cashflowEvent1.recurrenceLabel = @"Weekly, on Friday";
-    cashflowEvent1.notes = @"paid by check, hand-delivered on Fridays by the boss... need to deposit myself";
-    cashflowEvent1.autoPaidIndicator = @"No";
-    cashflowEvent1.alertTime = @"None";
-    //cashflowEvent1.paymentSeries = [PaymentSeries ]
-    
-    cashflowEvent2.type = @"Bill";
-    cashflowEvent2.name = @"Rent";
-    cashflowEvent2.amount = [NSNumber numberWithFloat:400.00];
-    cashflowEvent2.recurrenceType = @"Monthly";
-    cashflowEvent2.recurrenceDetail = @"1";
-    cashflowEvent2.recurrenceStartDate = sdate1;
-    cashflowEvent2.recurrenceEndDate = edate1;
-    cashflowEvent2.recurrenceLabel = @"Montly, due on the 1st";
-    cashflowEvent2.notes = @"auto debited from checking account";
-    cashflowEvent2.autoPaidIndicator = @"Yes";
-    cashflowEvent2.alertTime = @"None";
-    //cashflowEvent2.paymentSeries = [PaymentSeries ]
-    
-    cashflowEvent3.type = @"Continuous Expense";
-    cashflowEvent3.name = @"Food";
-    cashflowEvent3.amount = [NSNumber numberWithFloat:8.00];
-    cashflowEvent3.recurrenceType = @"Daily";
-    cashflowEvent3.recurrenceDetail = @"n/a";
-    cashflowEvent3.recurrenceStartDate = sdate1;
-    cashflowEvent3.recurrenceEndDate = edate1;
-    cashflowEvent3.recurrenceLabel = @"daily";
-    cashflowEvent3.notes = @"paid continuously via cash on hand";
-    cashflowEvent3.autoPaidIndicator = @"Yes";
-    cashflowEvent3.alertTime = @"None";
-    //cashflowEvent3.paymentSeries = [PaymentSeries ]
-    
-    [cashflowEventsArray addObject:cashflowEvent1];
-    [cashflowEventsArray addObject:cashflowEvent2];
-    [cashflowEventsArray addObject:cashflowEvent3];
-}
-
 - (IBAction)Add:(id)sender {
     NSLog(@"running in \"Add\" method");
 }
@@ -243,6 +180,68 @@ CashflowEvent *selectedCashflowEvent;
 {
     NSLog(@"unwinding from CashflowEventVC to CashflowEventTVC...");
     //NSLog(@"the new amount from the CFE veiw controller is %@", selectedCashflowEvent.amount);
+}
+
+-(void) loadCashflowEvents
+{
+    NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
+    
+    CashflowEvent *cashflowEvent1 = [[CashflowEvent alloc] init];
+    CashflowEvent *cashflowEvent2 = [[CashflowEvent alloc] init];
+    CashflowEvent *cashflowEvent3 = [[CashflowEvent alloc] init];
+    
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setDay:1];
+    [comps setMonth:8];
+    [comps setYear:2016];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *sdate1 = [gregorian dateFromComponents:comps];
+    [comps setMonth:9];
+    NSDate *edate1 = [gregorian dateFromComponents:comps];
+    //  [comps release];
+    
+    cashflowEvent1.type = @"Income";
+    cashflowEvent1.name = @"my paycheck";
+    cashflowEvent1.amount = [NSNumber numberWithFloat:555.00];
+    cashflowEvent1.recurrenceType = @"Weekly";
+    cashflowEvent1.recurrenceDetail = @"Friday";
+    cashflowEvent1.recurrenceStartDate = sdate1;
+    cashflowEvent1.recurrenceEndDate = edate1;
+    cashflowEvent1.recurrenceLabel = @"Weekly, on Friday";
+    cashflowEvent1.notes = @"paid by check, hand-delivered on Fridays by the boss... need to deposit myself";
+    cashflowEvent1.autoPaidIndicator = @"No";
+    cashflowEvent1.alertTime = @"None";
+    //cashflowEvent1.paymentSeries = [PaymentSeries ]
+    
+    cashflowEvent2.type = @"Bill";
+    cashflowEvent2.name = @"Rent";
+    cashflowEvent2.amount = [NSNumber numberWithFloat:400.00];
+    cashflowEvent2.recurrenceType = @"Monthly";
+    cashflowEvent2.recurrenceDetail = @"1";
+    cashflowEvent2.recurrenceStartDate = sdate1;
+    cashflowEvent2.recurrenceEndDate = edate1;
+    cashflowEvent2.recurrenceLabel = @"Montly, due on the 1st";
+    cashflowEvent2.notes = @"auto debited from checking account";
+    cashflowEvent2.autoPaidIndicator = @"Yes";
+    cashflowEvent2.alertTime = @"None";
+    //cashflowEvent2.paymentSeries = [PaymentSeries ]
+    
+    cashflowEvent3.type = @"Continuous Expense";
+    cashflowEvent3.name = @"Food";
+    cashflowEvent3.amount = [NSNumber numberWithFloat:8.00];
+    cashflowEvent3.recurrenceType = @"Daily";
+    cashflowEvent3.recurrenceDetail = @"n/a";
+    cashflowEvent3.recurrenceStartDate = sdate1;
+    cashflowEvent3.recurrenceEndDate = edate1;
+    cashflowEvent3.recurrenceLabel = @"daily";
+    cashflowEvent3.notes = @"paid continuously via cash on hand";
+    cashflowEvent3.autoPaidIndicator = @"Yes";
+    cashflowEvent3.alertTime = @"None";
+    //cashflowEvent3.paymentSeries = [PaymentSeries ]
+    
+    [cashflowEventsArray addObject:cashflowEvent1];
+    [cashflowEventsArray addObject:cashflowEvent2];
+    [cashflowEventsArray addObject:cashflowEvent3];
 }
 
 @end

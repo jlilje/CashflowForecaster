@@ -15,7 +15,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listPrototypeCell" rowHeight="20" id="Ojc-Yn-e6F">
-                                <rect key="frame" x="0.0" y="28" width="600" height="20"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ojc-Yn-e6F" id="zxV-5u-seH">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="19.5"/>
@@ -267,46 +267,25 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljc-eG-FQP">
-                                <rect key="frame" x="20" y="233" width="85" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ouV-6l-Pzn">
-                                <rect key="frame" x="103" y="315" width="256" height="126"/>
-                                <date key="date" timeIntervalSinceReferenceDate="490558048.66521901">
-                                    <!--2016-07-18 18:07:28 +0000-->
-                                </date>
-                            </datePicker>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="DfC-OQ-tTq">
-                                <rect key="frame" x="103" y="181" width="256" height="126"/>
-                                <date key="date" timeIntervalSinceReferenceDate="490558048.66521901">
-                                    <!--2016-07-18 18:07:28 +0000-->
-                                </date>
-                            </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMM-09-Oot">
-                                <rect key="frame" x="20" y="367" width="85" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nts-py-t8h">
-                                <rect key="frame" x="20" y="449" width="339" height="174"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="intervalSelector" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" background="downArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="uGc-6P-Dwz" customClass="UIDownPicker">
                                 <rect key="frame" x="103" y="72" width="196" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.99666275920000003" blue="0.70487297820000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="typeSelector"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="recurrenceTypeChanged:" destination="nOh-hr-oyq" eventType="editingDidEnd" id="z2b-r6-AeI"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kBf-GH-Z3Z">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kBf-GH-Z3Z" customClass="UIDownPicker">
                                 <rect key="frame" x="103" y="105" width="196" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.99666275920000003" blue="0.70487297820000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="typeSelector"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="typeDetailChanged:" destination="nOh-hr-oyq" eventType="editingDidEnd" id="j8Q-d5-W89"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7n-RU-uVm">
                                 <rect key="frame" x="20" y="109" width="91" height="26"/>
@@ -315,11 +294,75 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="red-arrow-right-md.png" translatesAutoresizingMaskIntoConstraints="NO" id="hOa-5W-K2v">
-                                <rect key="frame" x="40" y="133" width="33" height="32"/>
+                                <rect key="frame" x="40" y="133" width="40" height="34"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="helpful hint..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9t-mv-hbB">
-                                <rect key="frame" x="81" y="143" width="278" height="30"/>
-                                <accessibility key="accessibilityConfiguration" hint="what is this hint all about?" identifier="helpfulHintLabel"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" editable="NO" text="helpful hint..." translatesAutoresizingMaskIntoConstraints="NO" id="uMv-gS-bnD">
+                                <rect key="frame" x="83" y="143" width="271" height="45"/>
+                                <color key="backgroundColor" red="0.67725101340000005" green="1" blue="0.78562823110000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="helpfulHintTextView"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljc-eG-FQP">
+                                <rect key="frame" x="20" y="235" width="85" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nts-py-t8h">
+                                <rect key="frame" x="15" y="464" width="344" height="174"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="0.68902509789999999" green="1" blue="0.1400095002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.086220780890000001" green="0.77730284689999996" blue="0.020927558969999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.090759877040000006" green="0.27326677859999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="none" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw9-bB-P4g">
+                                <rect key="frame" x="20" y="264" width="85" height="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="DfC-OQ-tTq">
+                                <rect key="frame" x="103" y="183" width="256" height="126"/>
+                                <color key="backgroundColor" red="1" green="0.99666275920000003" blue="0.70487297820000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <date key="date" timeIntervalSinceReferenceDate="490558048.66521901">
+                                    <!--2016-07-18 18:07:28 +0000-->
+                                </date>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="473338800">
+                                    <!--2016-01-01 11:00:00 +0000-->
+                                </date>
+                                <date key="maximumDate" timeIntervalSinceReferenceDate="662641200">
+                                    <!--2021-12-31 11:00:00 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="startDateChanged:" destination="nOh-hr-oyq" eventType="valueChanged" id="S8S-pD-wyz"/>
+                                </connections>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description of payment series..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Urn-mQ-3hy">
+                                <rect key="frame" x="20" y="435" width="339" height="29"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ouV-6l-Pzn">
+                                <rect key="frame" x="103" y="310" width="256" height="126"/>
+                                <date key="date" timeIntervalSinceReferenceDate="490558048.66521901">
+                                    <!--2016-07-18 18:07:28 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="endDateChanged:" destination="nOh-hr-oyq" eventType="valueChanged" id="GaP-eh-j7b"/>
+                                </connections>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMM-09-Oot">
+                                <rect key="frame" x="20" y="362" width="85" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="none" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdR-9q-Egi">
+                                <rect key="frame" x="20" y="391" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -328,7 +371,11 @@
                         <color key="backgroundColor" red="0.6772510133778834" green="1" blue="0.78562823113287616" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="k1y-WM-Ip0">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="A4Z-bR-tE3"/>
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="A4Z-bR-tE3">
+                            <connections>
+                                <segue destination="Xqa-4l-DK4" kind="show" identifier="Save" id="6OU-eY-gW9"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="PbO-wN-UgY">
                             <connections>
                                 <segue destination="N5h-fc-J9K" kind="unwind" unwindAction="unwindToCashflowEventVC:" id="jXo-or-Gz2"/>
@@ -336,10 +383,18 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="helpfulHintLabel" destination="M9t-mv-hbB" id="e4b-KJ-4JW"/>
-                        <outlet property="recurrenceDownPicker" destination="uGc-6P-Dwz" id="QK0-bB-GiE"/>
+                        <outlet property="endDatePicker" destination="ouV-6l-Pzn" id="6wr-uE-7hr"/>
+                        <outlet property="endDateSelectedLabel" destination="HdR-9q-Egi" id="5Pm-f5-62F"/>
+                        <outlet property="helpfulHintTextView" destination="uMv-gS-bnD" id="6J2-pb-hEF"/>
+                        <outlet property="hintArrow" destination="hOa-5W-K2v" id="U4k-m6-RrO"/>
+                        <outlet property="paymentSeriesDescriptionLabel" destination="Urn-mQ-3hy" id="bIi-BS-0vP"/>
+                        <outlet property="paymentSeriesTableView" destination="nts-py-t8h" id="TGb-z6-P8q"/>
                         <outlet property="recurrenceTextField" destination="uGc-6P-Dwz" id="Xrk-1W-Apt"/>
+                        <outlet property="startDatePicker" destination="DfC-OQ-tTq" id="0El-fD-Xd5"/>
+                        <outlet property="startDateSelectedLabel" destination="hw9-bB-P4g" id="1iM-az-ZuX"/>
+                        <outlet property="typeDetailDownPicker" destination="kBf-GH-Z3Z" id="0jR-Qh-EK3"/>
                         <outlet property="typeDetailTextField" destination="kBf-GH-Z3Z" id="myX-58-YCT"/>
+                        <outlet property="typeDownPicker" destination="uGc-6P-Dwz" id="E8G-7s-wDc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PON-RV-cKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -454,7 +509,7 @@
         <image name="red-arrow-right-md.png" width="299" height="264"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eOr-qH-TlJ"/>
-        <segue reference="Ch0-lq-92U"/>
+        <segue reference="6OU-eY-gW9"/>
+        <segue reference="ktQ-69-VLQ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,6 +7,7 @@
 //
 
 #import "CashflowEventVC.h"
+
 #import "RecurrenceVC.h"
 
 @interface CashflowEventVC ()
@@ -16,6 +17,8 @@
 @end
 
 CashflowEvent *cashflowEventToBeEdited;
+
+CashflowEvent *cashflowEventNotToBeEdited; //this will be used to cache a copy of the original cashflow event in case we want to "cancel" at the CFE VC even though changes have already been "commited to the "ToBeEdited" CFE in subsequent VCs
 
 @implementation CashflowEventVC
 
@@ -54,6 +57,12 @@ CashflowEvent *cashflowEventToBeEdited;
     [alertTimeArray addObject:@"1 day prior"];
     [alertTimeArray addObject:@"2 days prior"];
     [alertTimeArray addObject:@"3 days prior"];
+    [alertTimeArray addObject:@"4 days prior"];
+    [alertTimeArray addObject:@"5 days prior"];
+    [alertTimeArray addObject:@"6 days prior"];
+    [alertTimeArray addObject:@"7 days prior"];
+    [alertTimeArray addObject:@"14 days prior"];
+    [alertTimeArray addObject:@"30 days prior"];
     // bind yourTextField to DownPicker
     self.alertTimeDownPicker = [[DownPicker alloc] initWithTextField:self.alertTimeTextField withData:alertTimeArray];
     
@@ -92,23 +101,29 @@ CashflowEvent *cashflowEventToBeEdited;
         //Save the new or edited payment cashflow event
         cashflowEventToBeEdited.type = _typeTextField.text;
         cashflowEventToBeEdited.name= _nameTextField.text;
-        cashflowEventToBeEdited.amount = _amountTextField.text; // = [NSString stringWithFormat:@"%.02f", ().floatValue];
+        cashflowEventToBeEdited.amount = _amountTextField.text;
         cashflowEventToBeEdited.recurrenceLabel = _recurrenceLabel.text;
         cashflowEventToBeEdited.notes = _commentsTextView.text;
         cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
         cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
-        
-        NSLog(@"the new name is %@", cashflowEventToBeEdited.name);
-        NSLog(@"the updated object is %@", cashflowEventToBeEdited);
     }
     else if ([segue.identifier isEqualToString:@"Cancel"])
     {
-        //Don't do anything -- this will be handled by the unwind to CashflowEventTVC
+        [self cloneObject:cashflowEventNotToBeEdited:cashflowEventToBeEdited];//cashflowEventToBeEdited = [CashflowEvent copy cashflowEventNotToBeEdited]
     }
     else if ([segue.identifier isEqualToString:@"Edit"])
     {
-         //Get the new view controller using [segue destinationViewController].
-         //Pass the selected object to the new view controller.
+        //Save any data that may have been updated
+        //Get the new view controller using [segue destinationViewController].
+        //Pass the selected object to the new view controller.
+        
+        cashflowEventToBeEdited.type = _typeTextField.text;
+        cashflowEventToBeEdited.name= _nameTextField.text;
+        cashflowEventToBeEdited.amount = _amountTextField.text;
+        cashflowEventToBeEdited.recurrenceLabel = _recurrenceLabel.text;
+        cashflowEventToBeEdited.notes = _commentsTextView.text;
+        cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
+        cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
         
         RecurrenceVC *vc = [segue destinationViewController];
     
