@@ -26,6 +26,84 @@ CashflowEvent *cashflowEventNotToBeEdited; //this will be used to cache a copy o
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self initializeDownPickers];
+    
+    //  [[cashEvent initWithType:@"" withName:@"" withAmount:0 withRecurrenceType:@"" withRecurrenceDetail:@"" withRecurrenceStartDate:2016-07-21 withRecurrenceEndDate:2016-07-21 withRecurrenceLabel:@"" withNotes:<#(NSString *)#> withAutoPaidIndicator:@"" withAlertTime:@"" withPaymentSeries:[PaymentSeries alloc] init] ];
+    
+    if(cashflowEventToBeEdited == NULL)
+    {
+        //create a new cashflow event
+    }
+    else
+    {
+        _typeTextField.text = cashflowEventToBeEdited.type;
+        _nameTextField.text = cashflowEventToBeEdited.name;
+        _amountTextField.text = [NSString stringWithFormat:@"%.02f", (cashflowEventToBeEdited.amount).floatValue];
+        _recurrenceTextView.text = cashflowEventToBeEdited.recurrenceLabel;
+        _commentsTextView.text = cashflowEventToBeEdited.notes;
+        _autoPaidIndicatorTextField.text = cashflowEventToBeEdited.autoPaidIndicator;
+        _alertTimeTextField.text = cashflowEventToBeEdited.alertTime;
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"sender id is \"%@\"", segue.identifier);
+    
+    if ([segue.identifier isEqualToString:@"Save"])
+    {
+        //Save the new or edited payment cashflow event
+        cashflowEventToBeEdited.type = _typeTextField.text;
+        cashflowEventToBeEdited.name= _nameTextField.text;
+        cashflowEventToBeEdited.amount = _amountTextField.text;
+        cashflowEventToBeEdited.recurrenceLabel = _recurrenceTextView.text;
+        cashflowEventToBeEdited.notes = _commentsTextView.text;
+        cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
+        cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
+    }
+    else if ([segue.identifier isEqualToString:@"Cancel"])
+    {
+        //[self cloneObject:cashflowEventNotToBeEdited:cashflowEventToBeEdited];//cashflowEventToBeEdited = [CashflowEvent copy cashflowEventNotToBeEdited]
+    }
+    else if ([segue.identifier isEqualToString:@"Edit"])
+    {
+        //Save any data that may have been updated
+        //Get the new view controller using [segue destinationViewController].
+        //Pass the selected object to the new view controller.
+        
+        cashflowEventToBeEdited.type = _typeTextField.text;
+        cashflowEventToBeEdited.name= _nameTextField.text;
+        cashflowEventToBeEdited.amount = _amountTextField.text;
+        cashflowEventToBeEdited.recurrenceLabel = _recurrenceTextView.text;
+        cashflowEventToBeEdited.notes = _commentsTextView.text;
+        cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
+        cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
+        
+        RecurrenceVC *vc = [segue destinationViewController];
+    
+        // Pass any objects to the view controller here, like...
+        [vc editCashflowEventRecurrence:cashflowEventToBeEdited];
+    }
+}
+
+- (void)editCashflowEvent:(CashflowEvent *)selectedCashflowEvent
+{
+    //NSLog(@"in editCashflowEvent method with the object %@", selectedCashflowEvent);
+    //NSLog(@"the original object passed in is %@", selectedCashflowEvent);
+    
+    cashflowEventToBeEdited = selectedCashflowEvent;
+}
+
+-(void) initializeDownPickers
+{
     //************************************************************************************************
     // create a selection box for cashflow item type
     // create the array of data
@@ -65,81 +143,7 @@ CashflowEvent *cashflowEventNotToBeEdited; //this will be used to cache a copy o
     [alertTimeArray addObject:@"30 days prior"];
     // bind yourTextField to DownPicker
     self.alertTimeDownPicker = [[DownPicker alloc] initWithTextField:self.alertTimeTextField withData:alertTimeArray];
-    
-    //  [[cashEvent initWithType:@"" withName:@"" withAmount:0 withRecurrenceType:@"" withRecurrenceDetail:@"" withRecurrenceStartDate:2016-07-21 withRecurrenceEndDate:2016-07-21 withRecurrenceLabel:@"" withNotes:<#(NSString *)#> withAutoPaidIndicator:@"" withAlertTime:@"" withPaymentSeries:[PaymentSeries alloc] init] ];
-    
-    if(cashflowEventToBeEdited == NULL)
-    {
-        //create a new cashflow event
-    }
-    else
-    {
-        _typeTextField.text = cashflowEventToBeEdited.type;
-        _nameTextField.text = cashflowEventToBeEdited.name;
-        _amountTextField.text = [NSString stringWithFormat:@"%.02f", (cashflowEventToBeEdited.amount).floatValue];
-        _recurrenceLabel.text = cashflowEventToBeEdited.recurrenceLabel;
-        _commentsTextView.text = cashflowEventToBeEdited.notes;
-        _autoPaidIndicatorTextField.text = cashflowEventToBeEdited.autoPaidIndicator;
-        _alertTimeTextField.text = cashflowEventToBeEdited.alertTime;
-    }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSLog(@"sender id is \"%@\"", segue.identifier);
-    
-    if ([segue.identifier isEqualToString:@"Save"])
-    {
-        //Save the new or edited payment cashflow event
-        cashflowEventToBeEdited.type = _typeTextField.text;
-        cashflowEventToBeEdited.name= _nameTextField.text;
-        cashflowEventToBeEdited.amount = _amountTextField.text;
-        cashflowEventToBeEdited.recurrenceLabel = _recurrenceLabel.text;
-        cashflowEventToBeEdited.notes = _commentsTextView.text;
-        cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
-        cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
-    }
-    else if ([segue.identifier isEqualToString:@"Cancel"])
-    {
-        [self cloneObject:cashflowEventNotToBeEdited:cashflowEventToBeEdited];//cashflowEventToBeEdited = [CashflowEvent copy cashflowEventNotToBeEdited]
-    }
-    else if ([segue.identifier isEqualToString:@"Edit"])
-    {
-        //Save any data that may have been updated
-        //Get the new view controller using [segue destinationViewController].
-        //Pass the selected object to the new view controller.
-        
-        cashflowEventToBeEdited.type = _typeTextField.text;
-        cashflowEventToBeEdited.name= _nameTextField.text;
-        cashflowEventToBeEdited.amount = _amountTextField.text;
-        cashflowEventToBeEdited.recurrenceLabel = _recurrenceLabel.text;
-        cashflowEventToBeEdited.notes = _commentsTextView.text;
-        cashflowEventToBeEdited.autoPaidIndicator = _autoPaidIndicatorTextField.text;
-        cashflowEventToBeEdited.alertTime = _alertTimeTextField.text;
-        
-        RecurrenceVC *vc = [segue destinationViewController];
-    
-        // Pass any objects to the view controller here, like...
-        [vc editCashflowEventRecurrence:cashflowEventToBeEdited];
-    }
-}
-
-- (void)editCashflowEvent:(CashflowEvent *)selectedCashflowEvent
-{
-    //NSLog(@"in editCashflowEvent method with the object %@", selectedCashflowEvent);
-    NSLog(@"the original object passed in is %@", selectedCashflowEvent);
-    
-    cashflowEventToBeEdited = selectedCashflowEvent;
-}
-
 
 -(IBAction)unwindToCashflowEventVC:(UIStoryboardSegue *)segue
 {

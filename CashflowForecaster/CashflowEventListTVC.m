@@ -8,7 +8,7 @@
 
 #import "CashflowEventListTVC.h"
 #import "CashflowEvent.h"
-#import "PaymentSeries.h"
+//#import "PaymentSeries.h"
 #import "CashflowEventVC.h"
 
 @interface CashflowEventListTVC ()
@@ -23,6 +23,8 @@ NSMutableArray *storedCashflowEventsArray;
 NSMutableArray *cashflowEventsArray;
 
 CashflowEvent *selectedCashflowEvent;
+
+NSMutableArray *paymentSeries;
 
 - (IBAction)Add:(id)sender {
     NSLog(@"running in \"Add\" method");
@@ -41,31 +43,31 @@ CashflowEvent *selectedCashflowEvent;
     
     if (storedCashflowEventsArray == NULL)
     {
-        NSLog(@"creating a new stored cashflow event array...");
+        //NSLog(@"creating a new stored cashflow event array...");
         storedCashflowEventsArray = [[NSMutableArray alloc] init];
     }
     
     if (cashflowEventsArray == NULL)
     {
-        NSLog(@"creating a new dynaic cashflow event array...");
+        //NSLog(@"creating a new dynaic cashflow event array...");
         cashflowEventsArray = [[NSMutableArray alloc] init];
     }
     
     if ([storedCashflowEventsArray count] == 0 && [cashflowEventsArray count] == 0)
     {
         //if both the persisted and non-persisted CFE arrays are empty, load the test CFEs into the array and continue
-        NSLog (@"loading test CFEs (both CFE arrays are empty)...");
+        //NSLog (@"loading test CFEs (both CFE arrays are empty)...");
         [self loadCashflowEvents];
     }
     else if ([storedCashflowEventsArray count] == 0)
     {
-        NSLog(@"inside viewDidLoad method, with condition of stored CFE array is the only empty array");
+        //NSLog(@"inside viewDidLoad method, with condition of stored CFE array is the only empty array");
         //if only the stored array is empty, continue using the unpersisted CFE Array and (eventually) persist it
     }
     else
     {
         //if only the unpersisted array is empty, load it to the dynamic CFE Array... this will be the normal startup process
-        NSLog(@"inside viewDidLoad method, with condition of dynamic CFE array is the only empty array");
+        //NSLog(@"inside viewDidLoad method, with condition of dynamic CFE array is the only empty array");
         cashflowEventsArray = [storedCashflowEventsArray mutableCopy];
     }
 }
@@ -95,7 +97,7 @@ CashflowEvent *selectedCashflowEvent;
  
     cell.textLabel.text = cashflowEvent.name;
     
-    NSLog(@"adding CFE %@ to TVC list", cashflowEvent.name);
+    //NSLog(@"adding CFE %@ to TVC list", cashflowEvent.name);
 
     return cell;
 }
@@ -144,17 +146,47 @@ CashflowEvent *selectedCashflowEvent;
 {
     NSLog(@"sender id is \"%@\"", segue.identifier);
     
-    NSLog(@"the CFE array going out is %@", cashflowEventsArray);
+    //NSLog(@"the CFE array going out is %@", cashflowEventsArray);
     
     if ([segue.identifier isEqualToString:@"Add..."])
     {
-        selectedCashflowEvent = [[CashflowEvent alloc] init];
+        //initialize new object
+        //add object to cashflowEventsArray
+        //hand new object off to next VC for editing
         
-        [cashflowEventsArray addObject:selectedCashflowEvent];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDate *currentDate = [NSDate date];
+        NSDateComponents *currentDateComponents = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:currentDate];
+        
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setDay:[currentDateComponents day]];
+        [comps setMonth:[currentDateComponents month]];
+        [comps setYear:[currentDateComponents year]];
+        
+        NSDate *sdate = [calendar dateFromComponents:comps];
+        [comps setMonth:[currentDateComponents month]+2];
+        NSDate *edate = [calendar dateFromComponents:comps];
+        
+        CashflowEvent *newCashflowEvent = [[CashflowEvent alloc] init];
+        newCashflowEvent.type = @"";
+        newCashflowEvent.name = @"";
+        newCashflowEvent.amount = [NSNumber numberWithFloat:0.00];
+        newCashflowEvent.recurrenceType = @"";
+        newCashflowEvent.recurrenceDetail = @"";
+        newCashflowEvent.recurrenceStartDate = sdate;
+        newCashflowEvent.recurrenceEndDate = edate;
+        newCashflowEvent.recurrenceLabel = @"";
+        newCashflowEvent.notes = @"";
+        newCashflowEvent.autoPaidIndicator = @"";
+        newCashflowEvent.alertTime = @"";
+        newCashflowEvent.paymentSeries = [self calculatePaymentSeries:@"Weekly":@"Friday":sdate:edate];
+        
+        [cashflowEventsArray addObject:newCashflowEvent];
         
         CashflowEventVC *vc = [segue destinationViewController];
         
-        [vc editCashflowEvent:selectedCashflowEvent];
+        [vc editCashflowEvent:newCashflowEvent];
+        
     }
     else //if ([segue.identifier isEqualToString:@"Edit"])
     {
@@ -173,7 +205,7 @@ CashflowEvent *selectedCashflowEvent;
 - (void) viewDidAppear:(BOOL)animated
 {
     [self.tableView reloadData];
-    NSLog(@"reloading table...");
+    //NSLog(@"reloading table...");
 }
 
 -(IBAction)unwindToCashflowEventTVC:(UIStoryboardSegue *)segue
@@ -184,7 +216,7 @@ CashflowEvent *selectedCashflowEvent;
 
 -(void) loadCashflowEvents
 {
-    NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
+    //NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
     
     CashflowEvent *cashflowEvent1 = [[CashflowEvent alloc] init];
     CashflowEvent *cashflowEvent2 = [[CashflowEvent alloc] init];
@@ -207,11 +239,11 @@ CashflowEvent *selectedCashflowEvent;
     cashflowEvent1.recurrenceDetail = @"Friday";
     cashflowEvent1.recurrenceStartDate = sdate1;
     cashflowEvent1.recurrenceEndDate = edate1;
-    cashflowEvent1.recurrenceLabel = @"Weekly, on Friday";
+    cashflowEvent1.recurrenceLabel = @"Every Friday (8/3/16 - 9/1/16)";
     cashflowEvent1.notes = @"paid by check, hand-delivered on Fridays by the boss... need to deposit myself";
     cashflowEvent1.autoPaidIndicator = @"No";
     cashflowEvent1.alertTime = @"None";
-    //cashflowEvent1.paymentSeries = [PaymentSeries ]
+    cashflowEvent1.paymentSeries = [self calculatePaymentSeries:@"Weekly":@"Friday":sdate1:edate1];
     
     cashflowEvent2.type = @"Bill";
     cashflowEvent2.name = @"Rent";
@@ -220,28 +252,44 @@ CashflowEvent *selectedCashflowEvent;
     cashflowEvent2.recurrenceDetail = @"1";
     cashflowEvent2.recurrenceStartDate = sdate1;
     cashflowEvent2.recurrenceEndDate = edate1;
-    cashflowEvent2.recurrenceLabel = @"Montly, due on the 1st";
+    cashflowEvent2.recurrenceLabel = @"On the 1st of the month (8/3/16 - 9/1/16)";
     cashflowEvent2.notes = @"auto debited from checking account";
     cashflowEvent2.autoPaidIndicator = @"Yes";
     cashflowEvent2.alertTime = @"None";
-    //cashflowEvent2.paymentSeries = [PaymentSeries ]
+    cashflowEvent2.paymentSeries = [self calculatePaymentSeries:@"Monthly":@"1":sdate1:edate1];
     
     cashflowEvent3.type = @"Continuous Expense";
     cashflowEvent3.name = @"Food";
     cashflowEvent3.amount = [NSNumber numberWithFloat:8.00];
     cashflowEvent3.recurrenceType = @"Daily";
-    cashflowEvent3.recurrenceDetail = @"n/a";
+    cashflowEvent3.recurrenceDetail = @"None";
     cashflowEvent3.recurrenceStartDate = sdate1;
     cashflowEvent3.recurrenceEndDate = edate1;
-    cashflowEvent3.recurrenceLabel = @"daily";
-    cashflowEvent3.notes = @"paid continuously via cash on hand";
+    cashflowEvent3.recurrenceLabel = @"Daily";
+    cashflowEvent3.notes = @"Daily (8/3/16 - 9/1/16)";
     cashflowEvent3.autoPaidIndicator = @"Yes";
     cashflowEvent3.alertTime = @"None";
-    //cashflowEvent3.paymentSeries = [PaymentSeries ]
+    cashflowEvent3.paymentSeries = [self calculatePaymentSeries:@"Continous Expense":@"None":sdate1:edate1];
     
     [cashflowEventsArray addObject:cashflowEvent1];
     [cashflowEventsArray addObject:cashflowEvent2];
     [cashflowEventsArray addObject:cashflowEvent3];
+}
+
+- (NSMutableArray *) calculatePaymentSeries:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
+{
+    //NSLog(@"calculating payment series with the following parameters passed in (not yet used): %@, %@, %@, %@", recurrenceType, recurrenceDetail, startDate, endDate);
+    
+    NSMutableArray *paymentDates = [NSMutableArray array];
+    //[paymentSeries alloc];
+    //NSLog(@"adding date %@ to payment series array...", [NSDate date]);
+    [paymentDates addObject:[NSDate date]];
+    //NSLog(@"adding date %@ to payment series array...", [NSDate dateWithTimeIntervalSinceNow:1000000]);
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:1000000]];
+    //NSLog(@"adding date %@ to payment series array...", [NSDate dateWithTimeIntervalSinceNow:2000000]);
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:2000000]];
+    //NSLog(@"payment series inside calcPaySeries is %@, which has %i objects in it!", paymentDates, (unsigned)paymentDates.count);
+    return paymentDates;
 }
 
 @end

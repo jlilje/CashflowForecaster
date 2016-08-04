@@ -12,7 +12,7 @@
 
 #import "DownPicker.h"
 
-@interface RecurrenceVC : UIViewController
+@interface RecurrenceVC : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITextField *recurrenceTextField;
 
@@ -35,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *endDatePicker;
 
 - (void) editCashflowEventRecurrence:(CashflowEvent *)cashflowEventToBeEdited;
+
 @property (strong, nonatomic) IBOutlet UITableView *paymentSeriesTableView;
 
 @property (strong, nonatomic) IBOutlet UITextView *helpfulHintTextView;

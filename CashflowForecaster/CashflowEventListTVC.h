@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CashflowEventListTVC : UITableViewController
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *Add;
 
 @end

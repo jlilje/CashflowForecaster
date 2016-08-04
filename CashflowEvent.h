@@ -16,21 +16,21 @@
 
 @property (nonatomic, strong) NSNumber *amount; //
 
-@property (nonatomic, strong) NSString *recurrenceType; // daily, weekly, bi-weekly, monthly, bi-monthly, quarterly, semi-annually, annually, one-time, specific number of days, other
+@property (nonatomic, strong) NSString *recurrenceType; //daily, weekly, bi-weekly, monthly, bi-monthly, quarterly, semi-annually, annually, one-time, specific number of days, other
 
-@property (nonatomic, strong) NSString *recurrenceDetail; // day of week (Monday - Sunday) or day of month (1 - 31)
+@property (nonatomic, strong) NSString *recurrenceDetail; //day of week (Monday - Sunday) or day of month (1 - 31), etc...
 
 @property (nonatomic, strong) NSDate *recurrenceStartDate; //
 
 @property (nonatomic, strong) NSDate *recurrenceEndDate; //
 
-@property (nonatomic, strong) NSString *recurrenceLabel; // describes the recurrence for display purposes
+@property (nonatomic, strong) NSString *recurrenceLabel; //describes the recurrence for display purposes
 
 @property (nonatomic, strong) NSString *notes; //
 
 @property (nonatomic, strong) NSString *autoPaidIndicator; //
 
-@property (nonatomic, strong) NSString *alertTime; // # of days prior to the due date you want to be notified (1 - 30 or "n/a")
+@property (nonatomic, strong) NSString *alertTime; //# of days prior to the due date you want to be notified (1 - 30 or "n/a")
 
 @property (nonatomic) NSMutableArray *paymentSeries;
 

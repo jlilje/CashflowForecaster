@@ -40,7 +40,558 @@ NSDictionary *recurrenceDetailHintDictionary;
     
     self.setDatePickerConstraints;
     
-    NSLog(@"running viewDidLoad");
+    [self updatePaymentSeriesDescription];
+    
+    [self calculatePaymentSeries:self.recurrenceTextField.text :self.typeDetailTextField.text :self.startDatePicker.date :self.endDatePicker.date];
+    
+    self.startDateSelectedLabel.text = [NSDateFormatter localizedStringFromDate:_startDatePicker.date
+                                                                      dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+    
+    self.endDateSelectedLabel.text = [NSDateFormatter localizedStringFromDate:_endDatePicker.date
+                                                                      dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+    
+    //NSLog(@"running viewDidLoad");
+}
+
+- (NSMutableArray *) calculatePaymentSeries:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
+{
+    
+//                NSDate *currentDate = [NSDate date];
+//                NSCalendar *calendar = [NSCalendar currentCalendar];
+//                NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:currentDate];
+//                
+//                NSDateComponents *futureComponents = [[NSDateComponents alloc] init];
+//                [futureComponents setDay:[components day]];
+//                [futureComponents setMonth:[components month]];
+//                [futureComponents setYear:[components year]+5];
+//                NSDate *futureDate = [calendar dateFromComponents:futureComponents];
+//
+    [cashflowEvent.paymentSeries removeAllObjects];
+    
+    if ([recurrenceType isEqualToString:@"Daily"])
+    {
+        int i = 0;
+        NSDate *iDate = startDate;
+        
+        for (iDate=startDate; iDate <= endDate; (iDate=[startDate dateByAddingTimeInterval:(86400*i)]))
+        {
+            [cashflowEvent.paymentSeries addObject:iDate];
+            i++;
+            //NSLog(@"%i, %@ (end date is %@)", i, iDate, endDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Weekly"])
+    {
+        int i = 0;
+        NSDate *iDate = startDate;
+        
+        for (iDate=startDate; iDate <= endDate; (iDate=[startDate dateByAddingTimeInterval:(86400*i*7)]))
+        {
+            [cashflowEvent.paymentSeries addObject:iDate];
+            i++;
+            //NSLog(@"%i, %@ (end date is %@)", i, iDate, endDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Bi-weekly"])
+    {
+        int i = 0;
+        NSDate *iDate = startDate;
+        
+        for (iDate=startDate; iDate <= endDate; (iDate=[startDate dateByAddingTimeInterval:(86400*i*14)]))
+        {
+            [cashflowEvent.paymentSeries addObject:iDate];
+            i++;
+            //NSLog(@"%i, %@ (end date is %@)", i, iDate, endDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Monthly"])
+    {
+        NSCalendar *myCalendar = [NSCalendar currentCalendar];
+        
+        long dayOfMonth = [recurrenceDetail longLongValue];
+        
+        NSDate *paymentDate;
+        
+        int currentMonth;
+        
+        int nextMonthUsing32Days;
+        
+        float intervalFactor;
+        
+        NSDateComponents *startDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        
+        NSDateComponents *paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        if (dayOfMonth == 31 && ([startDateComponents month] == 4 || [startDateComponents month] == 6 || [startDateComponents month] == 9 || [startDateComponents month] == 11))
+        {
+            [paymentDateComponents setDay:30];
+        }
+        else if (dayOfMonth > 28 && [startDateComponents month] == 2)
+        {
+            [paymentDateComponents setDay:28];
+        }
+        else
+        {
+            [paymentDateComponents setDay:dayOfMonth];
+        }
+        [paymentDateComponents setMonth:[startDateComponents month]];
+        [paymentDateComponents setYear:[startDateComponents year]];
+        paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+        
+        //NSLog(@"the first payment date is %@", paymentDate);
+        
+        while (paymentDate <= endDate)
+        {
+            if(paymentDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:paymentDate];
+            }
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            currentMonth = [paymentDateComponents month];
+            //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+            intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+            paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+            {
+                [paymentDateComponents setDay:30];
+            }
+            else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+            {
+                [paymentDateComponents setDay:28];
+            }
+            else
+            {
+                [paymentDateComponents setDay:dayOfMonth];
+            }
+            [paymentDateComponents setMonth:[paymentDateComponents month]];
+            [paymentDateComponents setYear:[paymentDateComponents year]];
+            paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+            //NSLog(@"another payment date is %@", paymentDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Bi-monthly"])
+    {
+        NSCalendar *myCalendar = [NSCalendar currentCalendar];
+        
+        long dayOfMonth = [recurrenceDetail longLongValue];
+        
+        NSDate *paymentDate;
+        
+        int currentMonth;
+        
+        int nextMonthUsing32Days;
+        
+        float intervalFactor;
+        
+        NSDateComponents *startDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        
+        NSDateComponents *paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        if (dayOfMonth == 31 && ([startDateComponents month] == 4 || [startDateComponents month] == 6 || [startDateComponents month] == 9 || [startDateComponents month] == 11))
+        {
+            [paymentDateComponents setDay:30];
+        }
+        else if (dayOfMonth > 28 && [startDateComponents month] == 2)
+        {
+            [paymentDateComponents setDay:28];
+        }
+        else
+        {
+            [paymentDateComponents setDay:dayOfMonth];
+        }
+        [paymentDateComponents setMonth:[startDateComponents month]];
+        [paymentDateComponents setYear:[startDateComponents year]];
+        paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+        
+        //NSLog(@"the first payment date is %@", paymentDate);
+        
+        while (paymentDate <= endDate)
+        {
+            if(paymentDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:paymentDate];
+            }
+            
+           // [self leapMonths:2:]
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            currentMonth = [paymentDateComponents month];
+            //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+            intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+            paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            
+            //now repeat this whole process a second time to leap forward 1 month
+            int i; //number of times to repeat
+            for (i=0; i<1; i++)
+            {
+                paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+                if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+                {
+                    [paymentDateComponents setDay:30];
+                }
+                else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+                {
+                    [paymentDateComponents setDay:28];
+                }
+                else
+                {
+                    [paymentDateComponents setDay:dayOfMonth];
+                }
+                currentMonth = [paymentDateComponents month];
+                //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+                intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+                paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            }
+            
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+            {
+                [paymentDateComponents setDay:30];
+            }
+            else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+            {
+                [paymentDateComponents setDay:28];
+            }
+            else
+            {
+                [paymentDateComponents setDay:dayOfMonth];
+            }
+            [paymentDateComponents setMonth:[paymentDateComponents month]];
+            [paymentDateComponents setYear:[paymentDateComponents year]];
+            paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+            //NSLog(@"another payment date is %@", paymentDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Quarterly"])
+    {
+        NSCalendar *myCalendar = [NSCalendar currentCalendar];
+        
+        long dayOfMonth = [recurrenceDetail longLongValue];
+        
+        NSDate *paymentDate;
+        
+        int currentMonth;
+        
+        int nextMonthUsing32Days;
+        
+        float intervalFactor;
+        
+        NSDateComponents *startDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        
+        NSDateComponents *paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        if (dayOfMonth == 31 && ([startDateComponents month] == 4 || [startDateComponents month] == 6 || [startDateComponents month] == 9 || [startDateComponents month] == 11))
+        {
+            [paymentDateComponents setDay:30];
+        }
+        else if (dayOfMonth > 28 && [startDateComponents month] == 2)
+        {
+            [paymentDateComponents setDay:28];
+        }
+        else
+        {
+            [paymentDateComponents setDay:dayOfMonth];
+        }
+        [paymentDateComponents setMonth:[startDateComponents month]];
+        [paymentDateComponents setYear:[startDateComponents year]];
+        paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+        
+        //NSLog(@"the first payment date is %@", paymentDate);
+        
+        while (paymentDate <= endDate)
+        {
+            if(paymentDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:paymentDate];
+            }
+            
+            // [self leapMonths:2:]
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            currentMonth = [paymentDateComponents month];
+            //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+            intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+            paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            
+            //now repeat this whole process a second time to leap forward 1 month
+            int i; //number of times to repeat
+            for (i=0; i<2; i++)
+            {
+                paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+                if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+                {
+                    [paymentDateComponents setDay:30];
+                }
+                else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+                {
+                    [paymentDateComponents setDay:28];
+                }
+                else
+                {
+                    [paymentDateComponents setDay:dayOfMonth];
+                }
+                currentMonth = [paymentDateComponents month];
+                //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+                intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+                paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            }
+            
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+            {
+                [paymentDateComponents setDay:30];
+            }
+            else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+            {
+                [paymentDateComponents setDay:28];
+            }
+            else
+            {
+                [paymentDateComponents setDay:dayOfMonth];
+            }
+            [paymentDateComponents setMonth:[paymentDateComponents month]];
+            [paymentDateComponents setYear:[paymentDateComponents year]];
+            paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+            //NSLog(@"another payment date is %@", paymentDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Semi-annually"])
+    {
+        NSCalendar *myCalendar = [NSCalendar currentCalendar];
+        
+        long dayOfMonth;
+        
+        NSDate *paymentDate;
+        
+        int currentMonth;
+        
+        int nextMonthUsing32Days;
+        
+        float intervalFactor;
+        
+        NSDateComponents *startDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        
+        NSDateComponents *paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        dayOfMonth = [paymentDateComponents day];
+        if (dayOfMonth == 31 && ([startDateComponents month] == 4 || [startDateComponents month] == 6 || [startDateComponents month] == 9 || [startDateComponents month] == 11))
+        {
+            [paymentDateComponents setDay:30];
+        }
+        else if (dayOfMonth > 28 && [startDateComponents month] == 2)
+        {
+            [paymentDateComponents setDay:28];
+        }
+        else
+        {
+            [paymentDateComponents setDay:dayOfMonth];
+        }
+        [paymentDateComponents setMonth:[startDateComponents month]];
+        [paymentDateComponents setYear:[startDateComponents year]];
+        paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+        
+        //NSLog(@"the first payment date is %@", paymentDate);
+        
+        while (paymentDate <= endDate)
+        {
+            if(paymentDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:paymentDate];
+            }
+            
+            // [self leapMonths:2:]
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            currentMonth = [paymentDateComponents month];
+            //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+            intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+            paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            
+            //now repeat this whole process a second time to leap forward 1 month
+            int i; //number of times to repeat
+            for (i=0; i<5; i++)
+            {
+                paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+                if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+                {
+                    [paymentDateComponents setDay:30];
+                }
+                else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+                {
+                    [paymentDateComponents setDay:28];
+                }
+                else
+                {
+                    [paymentDateComponents setDay:dayOfMonth];
+                }
+                currentMonth = [paymentDateComponents month];
+                //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+                intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+                paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            }
+            
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+            {
+                [paymentDateComponents setDay:30];
+            }
+            else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+            {
+                [paymentDateComponents setDay:28];
+            }
+            else
+            {
+                [paymentDateComponents setDay:dayOfMonth];
+            }
+            [paymentDateComponents setMonth:[paymentDateComponents month]];
+            [paymentDateComponents setYear:[paymentDateComponents year]];
+            paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+            //NSLog(@"another payment date is %@", paymentDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Annually"])
+    {
+        NSCalendar *myCalendar = [NSCalendar currentCalendar];
+        
+        long dayOfMonth;
+        
+        NSDate *paymentDate;
+        
+        int currentMonth;
+        
+        int nextMonthUsing32Days;
+        
+        float intervalFactor;
+        
+        NSDateComponents *startDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        
+        NSDateComponents *paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:startDate];
+        dayOfMonth = [paymentDateComponents day];
+        if (dayOfMonth == 31 && ([startDateComponents month] == 4 || [startDateComponents month] == 6 || [startDateComponents month] == 9 || [startDateComponents month] == 11))
+        {
+            [paymentDateComponents setDay:30];
+        }
+        else if (dayOfMonth > 28 && [startDateComponents month] == 2)
+        {
+            [paymentDateComponents setDay:28];
+        }
+        else
+        {
+            [paymentDateComponents setDay:dayOfMonth];
+        }
+        [paymentDateComponents setMonth:[startDateComponents month]];
+        [paymentDateComponents setYear:[startDateComponents year]];
+        paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+        
+        //NSLog(@"the first payment date is %@", paymentDate);
+        
+        while (paymentDate <= endDate)
+        {
+            if(paymentDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:paymentDate];
+            }
+            
+            // [self leapMonths:2:]
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            currentMonth = [paymentDateComponents month];
+            //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+            intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+            paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            
+            //now repeat this whole process a second time to leap forward 1 month
+            int i; //number of times to repeat
+            for (i=0; i<10; i++)
+            {
+                paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+                if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+                {
+                    [paymentDateComponents setDay:30];
+                }
+                else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+                {
+                    [paymentDateComponents setDay:28];
+                }
+                else
+                {
+                    [paymentDateComponents setDay:dayOfMonth];
+                }
+                currentMonth = [paymentDateComponents month];
+                //NSLog(@"calculating interval factor using parameters of dayOfMonth = %ld and currentMonth = %d", dayOfMonth, currentMonth);
+                intervalFactor = [self calculateNextMonthSecondsInterval:dayOfMonth:currentMonth];
+                paymentDate = [paymentDate dateByAddingTimeInterval:intervalFactor];
+            }
+            
+            paymentDateComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:paymentDate];
+            if (dayOfMonth == 31 && ([paymentDateComponents month] == 4 || [paymentDateComponents month] == 6 || [paymentDateComponents month] == 9 || [paymentDateComponents month] == 11))
+            {
+                [paymentDateComponents setDay:30];
+            }
+            else if (dayOfMonth > 28 && [paymentDateComponents month] == 2)
+            {
+                [paymentDateComponents setDay:28];
+            }
+            else
+            {
+                [paymentDateComponents setDay:dayOfMonth];
+            }
+            [paymentDateComponents setMonth:[paymentDateComponents month]];
+            [paymentDateComponents setYear:[paymentDateComponents year]];
+            paymentDate = [myCalendar dateFromComponents:paymentDateComponents];
+            //NSLog(@"another payment date is %@", paymentDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"Custom (# days)"])
+    {
+        int i = 0;
+        int dayInterval = (int)[recurrenceDetail floatValue];
+        NSDate *iDate = startDate;
+        
+        for (iDate=startDate; iDate <= endDate; (iDate=[startDate dateByAddingTimeInterval:(86400*i*dayInterval)]))
+        {
+            if(iDate >= startDate)
+            {
+                [cashflowEvent.paymentSeries addObject:iDate];
+            }
+            i++;
+            //NSLog(@"%i, %@ (end date is %@)", i, iDate, endDate);
+        }
+    }
+    else if ([recurrenceType isEqualToString:@"One-time"])
+    {
+        [cashflowEvent.paymentSeries addObject:startDate];
+    }
+    [self.paymentSeriesTableView reloadData];
+    return cashflowEvent.paymentSeries;
+}
+
+//-(NSDate) leapMonths:(int)numberOfMonths :(long)dayOfMonth :(int)currentMonth
+//{
+//    
+//}
+
+-(float) calculateNextMonthSecondsInterval:(long)dayOfMonth :(int)currentMonth
+{
+    //there are 86,400 (86400) seconds in a day
+    //months with 31 days include january-1, march-3, may-5, july-7, august-8, october-10 and december-12 = 2,678,400 (2678400) seconds
+    //months with 30 days include april-4, june-6, september-9 and november-11 = 2,592,000 (2592000) seconds
+    //months with less than 30 days include february-2 (28) = 2,419,200 (2419200) seconds
+    //NOTES:
+    //  when the payment day of the month is in the first half of the month, we want to jump to the next month using 35 days to ensure we get all the way into the next month in all cases
+    //      - an extreme case includes payments due on the 1st
+    //      - another extreme case includes when Feb can be corrected back as much as 3 days (from 31 to 28) to account for "last day of month" due dates... 30 day months as well
+    //      ** use 34 days or 2,937,600 (2937600) seconds
+    //  when the payment day of the month is in the last half of the month, we want to jump to the next month using 18 days to ensure we get all the way into the next month in all cases
+    //      - an extreme case is when the payment is due on last day of the month as well as the 16th day of the month
+    //      ** use 18 days or 1,555,200 (1555200) seconds
+    
+    float intervalFactor;
+    
+    if (dayOfMonth <= 15) //use the max
+    {
+        intervalFactor = 2937600;
+    }
+    else //use the minimum number of seconds that will guarantee we get into the next month without ever going past the next month -- 16 days (or 1,382,400 seconds)
+    {
+        //else use the min
+        intervalFactor = 1555200;
+    }
+    //NSLog(@"the number of days used to calculate the next month is %f", intervalFactor);
+    return intervalFactor;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -66,7 +617,7 @@ NSDictionary *recurrenceDetailHintDictionary;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     {
-        NSLog(@"sender id is \"%@\"", segue.identifier);
+        //NSLog(@"sender id is \"%@\"", segue.identifier);
         
         if ([segue.identifier isEqualToString:@"Save"])
         {
@@ -83,7 +634,6 @@ NSDictionary *recurrenceDetailHintDictionary;
         }
     }
 }
-
 
 - (void) initializeFieldsWithCurrentValues
 {
@@ -114,10 +664,36 @@ NSDictionary *recurrenceDetailHintDictionary;
     self.paymentSeriesDescriptionLabel.text = cashflowEvent.recurrenceLabel;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+   //NSLog(@"number of rows in section is %@", cashflowEvent.paymentSeries.count);
+    return cashflowEvent.paymentSeries.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *paymentSeriesTableIdentifier = @"PaymentSeriesIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:paymentSeriesTableIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:paymentSeriesTableIdentifier];
+    }
+    
+    NSString *dateString =
+    [NSDateFormatter localizedStringFromDate:[cashflowEvent.paymentSeries objectAtIndex:indexPath.row]
+                                   dateStyle:NSDateFormatterShortStyle
+                                   timeStyle:NSDateFormatterNoStyle];
+    cell.textLabel.text = dateString;
+    return cell;
+}
+
 - (IBAction)startDateChanged:(UIDatePicker *)sender {
     self.startDateSelectedLabel.text = [NSDateFormatter localizedStringFromDate:_startDatePicker.date
                                    dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
     [self updatePaymentSeriesDescription];
+    [self calculatePaymentSeries:self.recurrenceTextField.text :self.typeDetailTextField.text :self.startDatePicker.date :self.endDatePicker.date];
 }
 
 - (IBAction)endDateChanged:(id)sender
@@ -125,6 +701,7 @@ NSDictionary *recurrenceDetailHintDictionary;
     self.endDateSelectedLabel.text = [NSDateFormatter localizedStringFromDate:_endDatePicker.date
                                                                       dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
     [self updatePaymentSeriesDescription];
+    [self calculatePaymentSeries:self.recurrenceTextField.text :self.typeDetailTextField.text :self.startDatePicker.date :self.endDatePicker.date];
 }
 
 - (void) setDatePickerConstraints
@@ -169,7 +746,7 @@ NSDictionary *recurrenceDetailHintDictionary;
 
 - (void) initializeTypeDetailDownPicker:(NSString *)recurrenceType
 {
-    NSLog(@"loading typeDetailDownPicker with values for %@", recurrenceType);
+    //NSLog(@"loading typeDetailDownPicker with values for %@", recurrenceType);
     //************************************************************************************************
     // create a selection box for cashflow item interval... daily, weekly, bi-weekly, monthly, bi-monthly, quarterly, semi-annually, annually, one-time, specific number of days, other
     // create the array of data
@@ -259,7 +836,7 @@ NSDictionary *recurrenceDetailHintDictionary;
     // bind yourTextField to DownPicker
     self.typeDetailDownPicker = [[DownPicker alloc] initWithTextField:self.typeDetailTextField withData:typeDetailArray];
     
-    NSLog(@"reloading typeDetailArray with the values for %@", self.recurrenceTextField.text);
+    //NSLog(@"reloading typeDetailArray with the values for %@", self.recurrenceTextField.text);
 }
 
 - (void) initializeHintDictionary
@@ -292,6 +869,22 @@ NSDictionary *recurrenceDetailHintDictionary;
         self.typeDetailTextField.text = @"None";
         [self updatePaymentSeriesDescription];
     }
+    else if ([self.recurrenceTextField.text isEqualToString:@"Weekly"] || [self.recurrenceTextField.text isEqualToString:@"Bi-weekly"])
+    {
+        self.typeDetailTextField.text = @"Monday";
+        [self updatePaymentSeriesDescription];
+    }
+    else if ([self.recurrenceTextField.text isEqualToString:@"Monthly"] || [self.recurrenceTextField.text isEqualToString:@"Bi-monthly"] || [self.recurrenceTextField.text isEqualToString:@"Quarterly"])
+    {
+        self.typeDetailTextField.text = @"1";
+        [self updatePaymentSeriesDescription];
+    }
+    else if ([self.recurrenceTextField.text isEqualToString:@"Custom (# days)"])
+    {
+        self.typeDetailTextField.text = @"30";
+        [self updatePaymentSeriesDescription];
+    }
+    [self calculatePaymentSeries:self.recurrenceTextField.text :self.typeDetailTextField.text :self.startDatePicker.date :self.endDatePicker.date];
     self.reloadInputViews;
 }
 
@@ -300,6 +893,7 @@ NSDictionary *recurrenceDetailHintDictionary;
     self.helpfulHintTextView.text = @"";
     self.hintArrow.hidden = YES;
     [self updatePaymentSeriesDescription];
+    [self calculatePaymentSeries:self.recurrenceTextField.text :self.typeDetailTextField.text :self.startDatePicker.date :self.endDatePicker.date];
 }
 
 - (void) updatePaymentSeriesDescription
@@ -319,7 +913,7 @@ NSDictionary *recurrenceDetailHintDictionary;
     {
         startDate = [NSDate date];
     }
-    NSLog(@"startDate is now %@", startDate);
+    //NSLog(@"startDate is now %@", startDate);
     
     //end date must be equal to or greater than the start date but NO MORE THAN 5 YEARS into the future...
     //      if nothing selected, I'll use 5 years from now

@@ -20,7 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 
-@property (weak, nonatomic) IBOutlet UILabel *recurrenceLabel;
+@property (strong, nonatomic) IBOutlet UITextView *recurrenceTextView;
 
 @property (weak, nonatomic) IBOutlet UITextView *commentsTextView;
 

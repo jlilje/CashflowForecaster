@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) NSDate *dueDate; //
 
-@property (nonatomic, strong) NSString *paymentStatus; //
+//@property (nonatomic, strong) NSString *paymentStatus; //
 
 @end
