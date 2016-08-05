@@ -1,12 +1,23 @@
 PODS:
+  - Charts (2.2.5):
+    - Charts/Core (= 2.2.5)
+  - Charts/Core (2.2.5)
   - DownPicker (0.1.34)
+  - PNChart (0.8.9):
+    - UICountingLabel (~> 1.2.0)
+  - UICountingLabel (1.2.0)
 
 DEPENDENCIES:
+  - Charts
   - DownPicker
+  - PNChart
 
 SPEC CHECKSUMS:
+  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
   DownPicker: c00ea63f08ae82116cc93d0eba74e86bf3d4c68e
+  PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
 
-PODFILE CHECKSUM: 9197237c0bc0d3ba2a0810f29a10e3fb088b6d57
+PODFILE CHECKSUM: 324c120e3161bce89255ffb8e50cd8d638848cdc
 
 COCOAPODS: 1.0.1

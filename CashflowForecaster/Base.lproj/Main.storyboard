@@ -17,7 +17,7 @@
                         <color key="sectionIndexTrackingBackgroundColor" red="0.67725101340000005" green="1" blue="0.78562823110000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listPrototypeCell" rowHeight="20" id="Ojc-Yn-e6F">
-                                <rect key="frame" x="0.0" y="28" width="600" height="20"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ojc-Yn-e6F" id="zxV-5u-seH">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
@@ -34,7 +34,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Cashflow Events" id="uPb-mQ-n6X">
+                    <navigationItem key="navigationItem" title="Cashflow Events (Add or Edit)" id="uPb-mQ-n6X">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="bo8-K1-Hea">
                             <connections>
                                 <action selector="Add:" destination="ncz-c4-BXc" id="iCi-ci-npE"/>
@@ -52,7 +52,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6B7-ig-nP6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="1369"/>
+            <point key="canvasLocation" x="-406" y="1367"/>
         </scene>
         <!--CashflowEventVC-->
         <scene sceneID="87m-R2-I3N">
@@ -196,7 +196,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OTc-Ns-tlO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="TiH-RZ-WVO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="2136"/>
+            <point key="canvasLocation" x="-406" y="2063"/>
         </scene>
         <!--CurrentAssets-->
         <scene sceneID="IB2-Al-tfb">
@@ -223,12 +223,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZu-4B-FiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1035" y="1462"/>
+            <point key="canvasLocation" x="223" y="1367"/>
         </scene>
         <!--Reports-->
         <scene sceneID="4CD-zQ-EAQ">
             <objects>
-                <viewController title="Reports" id="eN3-6z-z1J" sceneMemberID="viewController">
+                <viewController title="Reports" id="eN3-6z-z1J" customClass="ReportVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5fi-Yo-Gvw"/>
                         <viewControllerLayoutGuide type="bottom" id="8Ii-77-cjR"/>
@@ -243,14 +243,93 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V7h-fQ-lRn">
+                                <rect key="frame" x="259" y="341" width="95" height="30"/>
+                                <state key="normal" title="Change Value">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeValue:" destination="eN3-6z-z1J" eventType="touchUpInside" id="Y1c-1N-PNd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Percentage" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0j-b1-J2B">
+                                <rect key="frame" x="31" y="500" width="88" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vxM-qn-JGg">
+                                <rect key="frame" x="31" y="395" width="51" height="31"/>
+                                <connections>
+                                    <action selector="centerSwitchChanged:" destination="eN3-6z-z1J" eventType="valueChanged" id="hMB-lm-0hh"/>
+                                    <action selector="rightSwitchChanged:" destination="eN3-6z-z1J" eventType="valueChanged" id="Quw-JV-FBP"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Multiple Selection" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13e-W5-dUf">
+                                <rect key="frame" x="31" y="432" width="137" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORC-v6-3us">
+                                <rect key="frame" x="31" y="461" width="51" height="31"/>
+                                <connections>
+                                    <action selector="leftSwitchChanged:" destination="eN3-6z-z1J" eventType="valueChanged" id="skG-c3-SjX"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iD-tp-7cr">
+                                <rect key="frame" x="130" y="72" width="127" height="25"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Show Labels" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSD-R7-IME">
+                                <rect key="frame" x="481" y="513" width="99" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="99" id="so4-t9-cRU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xPK-Cc-ROt" userLabel="Animations Switch">
+                                <rect key="frame" x="531" y="409" width="51" height="31"/>
+                                <connections>
+                                    <action selector="animationsSwitchChanged:" destination="eN3-6z-z1J" eventType="valueChanged" id="VFC-rh-Byj"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Animations" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tE-xc-IHa">
+                                <rect key="frame" x="494" y="446" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oM4-3W-EYC">
+                                <rect key="frame" x="531" y="475" width="51" height="31"/>
+                                <connections>
+                                    <action selector="rightSwitchChanged:" destination="eN3-6z-z1J" eventType="valueChanged" id="0aN-Uu-0uE"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="KL3-6e-0Vy"/>
+                    <connections>
+                        <outlet property="animationsSwitch" destination="xPK-Cc-ROt" id="GSK-J2-JME"/>
+                        <outlet property="centerSwitch" destination="vxM-qn-JGg" id="iFy-x6-EDZ"/>
+                        <outlet property="centerSwitchLabel" destination="13e-W5-dUf" id="pog-mH-QYp"/>
+                        <outlet property="changeValueButton" destination="V7h-fQ-lRn" id="6OH-WG-V4j"/>
+                        <outlet property="leftLabel" destination="u0j-b1-J2B" id="Xwn-xk-RH8"/>
+                        <outlet property="leftSwitch" destination="ORC-v6-3us" id="QX0-PU-5cH"/>
+                        <outlet property="rightLabel" destination="uSD-R7-IME" id="NqL-1j-Vww"/>
+                        <outlet property="rightSwitch" destination="oM4-3W-EYC" id="3mt-9a-v7O"/>
+                        <outlet property="titleLabel" destination="3iD-tp-7cr" id="RCJ-Mq-xf6"/>
+                        <outlet property="view" destination="V7h-fQ-lRn" id="a2k-yk-fhE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kul-jC-G3I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1663" y="1462"/>
+            <point key="canvasLocation" x="851" y="1367"/>
         </scene>
         <!--RecurrenceVC-->
         <scene sceneID="srj-9N-kmB">
@@ -426,7 +505,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PON-RV-cKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="N5h-fc-J9K" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="2974"/>
+            <point key="canvasLocation" x="-406" y="2762"/>
         </scene>
         <!--ShowMeTheMoneyVC-->
         <scene sceneID="yl2-sM-qoP">
@@ -464,7 +543,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCG-I6-Xwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1035" y="764"/>
+            <point key="canvasLocation" x="223" y="671"/>
         </scene>
         <!--ReportsNavCon-->
         <scene sceneID="JU5-cq-kLh">
@@ -481,7 +560,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2q-1P-VQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1663" y="764"/>
+            <point key="canvasLocation" x="851" y="671"/>
         </scene>
         <!--CashflowEventNavCon-->
         <scene sceneID="BTI-6D-tsm">
@@ -500,7 +579,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJf-Yq-Frb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="664"/>
+            <point key="canvasLocation" x="-406" y="671"/>
         </scene>
     </scenes>
     <resources>
@@ -508,7 +587,7 @@
         <image name="red-arrow-right-md.png" width="299" height="264"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6OU-eY-gW9"/>
-        <segue reference="Ch0-lq-92U"/>
+        <segue reference="ktQ-69-VLQ"/>
+        <segue reference="eOr-qH-TlJ"/>
     </inferredMetricsTieBreakers>
 </document>

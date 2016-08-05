@@ -8,12 +8,10 @@
 
 #import "CashflowEventListTVC.h"
 #import "CashflowEvent.h"
-//#import "PaymentSeries.h"
 #import "CashflowEventVC.h"
+#import "SharedCashflowEventsArray.h"
 
 @interface CashflowEventListTVC ()
-//@property NSMutableArray *cashflowEventsArray;
-//@property CashflowEvent *selectedCashflowEvent;
 @end
 
 @implementation CashflowEventListTVC
@@ -39,7 +37,6 @@ NSMutableArray *paymentSeries;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     
     if (storedCashflowEventsArray == NULL)
     {
@@ -70,6 +67,8 @@ NSMutableArray *paymentSeries;
         //NSLog(@"inside viewDidLoad method, with condition of dynamic CFE array is the only empty array");
         cashflowEventsArray = [storedCashflowEventsArray mutableCopy];
     }
+    //SharedCashflowEventsArray *sharedCashflowEventsArray = cashflowEventsArray;//[NSMutableArray arrayWithArray:cashflowEventsArray];
+    [SharedCashflowEventsArray singleton].sharedCashflowEventsArray = cashflowEventsArray;
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,8 +95,6 @@ NSMutableArray *paymentSeries;
     CashflowEvent *cashflowEvent = [cashflowEventsArray objectAtIndex:indexPath.row];
  
     cell.textLabel.text = cashflowEvent.name;
-    
-    //NSLog(@"adding CFE %@ to TVC list", cashflowEvent.name);
 
     return cell;
 }
@@ -146,8 +143,6 @@ NSMutableArray *paymentSeries;
 {
     NSLog(@"sender id is \"%@\"", segue.identifier);
     
-    //NSLog(@"the CFE array going out is %@", cashflowEventsArray);
-    
     if ([segue.identifier isEqualToString:@"Add..."])
     {
         //initialize new object
@@ -179,7 +174,7 @@ NSMutableArray *paymentSeries;
         newCashflowEvent.notes = @"";
         newCashflowEvent.autoPaidIndicator = @"";
         newCashflowEvent.alertTime = @"";
-        newCashflowEvent.paymentSeries = [self calculatePaymentSeries:@"Weekly":@"Friday":sdate:edate];
+        newCashflowEvent.paymentSeries = [self calculatePaymentSeries1:@"Weekly":@"Friday":sdate:edate];
         
         [cashflowEventsArray addObject:newCashflowEvent];
         
@@ -188,7 +183,7 @@ NSMutableArray *paymentSeries;
         [vc editCashflowEvent:newCashflowEvent];
         
     }
-    else //if ([segue.identifier isEqualToString:@"Edit"])
+    else
     {
         // First, get the selected cashflow event
         // Then, get the destination view controller using [segue destinationViewController].
@@ -216,79 +211,146 @@ NSMutableArray *paymentSeries;
 
 -(void) loadCashflowEvents
 {
-    //NSLog(@"IM CREATING NEW CASHFLOW EVENTS!!!!!!!!!!!!!");
-    
     CashflowEvent *cashflowEvent1 = [[CashflowEvent alloc] init];
     CashflowEvent *cashflowEvent2 = [[CashflowEvent alloc] init];
     CashflowEvent *cashflowEvent3 = [[CashflowEvent alloc] init];
     
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setDay:1];
-    [comps setMonth:8];
-    [comps setYear:2016];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDate *sdate1 = [gregorian dateFromComponents:comps];
-    [comps setMonth:9];
-    NSDate *edate1 = [gregorian dateFromComponents:comps];
-    //  [comps release];
+    
+    NSDateComponents *comps1 = [[NSDateComponents alloc] init];
+    [comps1 setDay:5];
+    [comps1 setMonth:8];
+    [comps1 setYear:2016];
+    NSDate *sdate1 = [gregorian dateFromComponents:comps1];
+    [comps1 setMonth:9];
+    NSDate *edate1 = [gregorian dateFromComponents:comps1];
+    
+    NSDateComponents *comps2 = [[NSDateComponents alloc] init];
+    [comps2 setDay:5];
+    [comps2 setMonth:8];
+    [comps2 setYear:2016];
+    NSDate *sdate2 = [gregorian dateFromComponents:comps2];
+    [comps2 setYear:2017];
+    NSDate *edate2 = [gregorian dateFromComponents:comps2];
+    
+    NSDateComponents *comps3 = [[NSDateComponents alloc] init];
+    [comps3 setDay:5];
+    [comps3 setMonth:8];
+    [comps3 setYear:2016];
+    NSDate *sdate3 = [gregorian dateFromComponents:comps3];
+    [comps3 setMonth:9];
+    NSDate *edate3 = [gregorian dateFromComponents:comps3];
     
     cashflowEvent1.type = @"Income";
-    cashflowEvent1.name = @"my paycheck";
+    cashflowEvent1.name = @"Paycheck";
     cashflowEvent1.amount = [NSNumber numberWithFloat:555.00];
     cashflowEvent1.recurrenceType = @"Weekly";
     cashflowEvent1.recurrenceDetail = @"Friday";
     cashflowEvent1.recurrenceStartDate = sdate1;
     cashflowEvent1.recurrenceEndDate = edate1;
-    cashflowEvent1.recurrenceLabel = @"Every Friday (8/3/16 - 9/1/16)";
+    cashflowEvent1.recurrenceLabel = @"Every Friday (8/5/16 - 9/5/16)";
     cashflowEvent1.notes = @"paid by check, hand-delivered on Fridays by the boss... need to deposit myself";
     cashflowEvent1.autoPaidIndicator = @"No";
     cashflowEvent1.alertTime = @"None";
-    cashflowEvent1.paymentSeries = [self calculatePaymentSeries:@"Weekly":@"Friday":sdate1:edate1];
+    cashflowEvent1.paymentSeries = [self calculatePaymentSeries1:@"Weekly":@"Friday":sdate1:edate1];
     
     cashflowEvent2.type = @"Bill";
     cashflowEvent2.name = @"Rent";
     cashflowEvent2.amount = [NSNumber numberWithFloat:400.00];
     cashflowEvent2.recurrenceType = @"Monthly";
     cashflowEvent2.recurrenceDetail = @"1";
-    cashflowEvent2.recurrenceStartDate = sdate1;
-    cashflowEvent2.recurrenceEndDate = edate1;
-    cashflowEvent2.recurrenceLabel = @"On the 1st of the month (8/3/16 - 9/1/16)";
+    cashflowEvent2.recurrenceStartDate = sdate2;
+    cashflowEvent2.recurrenceEndDate = edate2;
+    cashflowEvent2.recurrenceLabel = @"On the 1st of the month (8/5/16 - 8/5/17)";
     cashflowEvent2.notes = @"auto debited from checking account";
     cashflowEvent2.autoPaidIndicator = @"Yes";
     cashflowEvent2.alertTime = @"None";
-    cashflowEvent2.paymentSeries = [self calculatePaymentSeries:@"Monthly":@"1":sdate1:edate1];
+    cashflowEvent2.paymentSeries = [self calculatePaymentSeries2:@"Monthly":@"1":sdate2:edate2];
     
     cashflowEvent3.type = @"Continuous Expense";
     cashflowEvent3.name = @"Food";
     cashflowEvent3.amount = [NSNumber numberWithFloat:8.00];
     cashflowEvent3.recurrenceType = @"Daily";
     cashflowEvent3.recurrenceDetail = @"None";
-    cashflowEvent3.recurrenceStartDate = sdate1;
-    cashflowEvent3.recurrenceEndDate = edate1;
+    cashflowEvent3.recurrenceStartDate = sdate3;
+    cashflowEvent3.recurrenceEndDate = edate3;
     cashflowEvent3.recurrenceLabel = @"Daily";
-    cashflowEvent3.notes = @"Daily (8/3/16 - 9/1/16)";
+    cashflowEvent3.notes = @"Daily (8/5/16 - 9/5/16)";
     cashflowEvent3.autoPaidIndicator = @"Yes";
     cashflowEvent3.alertTime = @"None";
-    cashflowEvent3.paymentSeries = [self calculatePaymentSeries:@"Continous Expense":@"None":sdate1:edate1];
+    cashflowEvent3.paymentSeries = [self calculatePaymentSeries3:@"Continous Expense":@"None":sdate3:edate3];
     
     [cashflowEventsArray addObject:cashflowEvent1];
     [cashflowEventsArray addObject:cashflowEvent2];
     [cashflowEventsArray addObject:cashflowEvent3];
 }
 
-- (NSMutableArray *) calculatePaymentSeries:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
+- (NSMutableArray *) calculatePaymentSeries1:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
 {
-    //NSLog(@"calculating payment series with the following parameters passed in (not yet used): %@, %@, %@, %@", recurrenceType, recurrenceDetail, startDate, endDate);
-    
+    //Weekly
     NSMutableArray *paymentDates = [NSMutableArray array];
-    //[paymentSeries alloc];
-    //NSLog(@"adding date %@ to payment series array...", [NSDate date]);
     [paymentDates addObject:[NSDate date]];
-    //NSLog(@"adding date %@ to payment series array...", [NSDate dateWithTimeIntervalSinceNow:1000000]);
-    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:1000000]];
-    //NSLog(@"adding date %@ to payment series array...", [NSDate dateWithTimeIntervalSinceNow:2000000]);
-    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:2000000]];
-    //NSLog(@"payment series inside calcPaySeries is %@, which has %i objects in it!", paymentDates, (unsigned)paymentDates.count);
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*7*1]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*7*2]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*7*3]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*7*4]];
+    return paymentDates;
+}
+
+- (NSMutableArray *) calculatePaymentSeries2:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
+{
+    //Monthly
+    NSMutableArray *paymentDates = [NSMutableArray array];
+    [paymentDates addObject:[NSDate date]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*1]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*2]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*3]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*4]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*5]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*6]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*7]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*8]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*9]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*10]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30*11]];
+    return paymentDates;
+}
+
+- (NSMutableArray *) calculatePaymentSeries3:(NSString *)recurrenceType :(NSString *)recurrenceDetail :(NSDate *)startDate :(NSDate *)endDate
+{
+    //Daily
+    NSMutableArray *paymentDates = [NSMutableArray array];
+    [paymentDates addObject:[NSDate date]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*1]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*2]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*3]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*4]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*5]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*6]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*7]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*8]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*9]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*10]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*11]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*12]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*13]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*14]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*15]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*16]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*17]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*18]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*19]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*20]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*21]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*22]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*23]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*24]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*25]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*26]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*27]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*28]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*29]];
+    [paymentDates addObject:[NSDate dateWithTimeIntervalSinceNow:86400*30]];
     return paymentDates;
 }
 

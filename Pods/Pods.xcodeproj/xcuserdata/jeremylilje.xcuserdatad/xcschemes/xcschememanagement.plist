@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DownPicker-DownPicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -14,7 +19,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PNChart.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CashflowForecaster.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UICountingLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>36BAB3CA46814A7AA9DBCC9CAF14788D</key>
+		<key>016D982990393D4CF14C8AE7998AEC65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C05FADE30EF910B83CBF24CED9FD2F6</key>
+		<key>45AAC36978987A0CB9351BEEB0C7E26E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>926A84365F6B93264AF882DA49B7E685</key>
+		<key>6C18C789438292FED01EB702705FC9AA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A8D6C169B703F406C4B4E2AEED7E7D13</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C6828C2508515BC0428D6BDAA1292DC9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F69ACDA8267D09383E82F875B0B714C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
