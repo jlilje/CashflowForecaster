@@ -46,7 +46,7 @@
         self.lineChart = [[PNLineChart alloc] initWithFrame:CGRectMake(0, 135.0, SCREEN_WIDTH, 200.0)];
         self.lineChart.yLabelFormat = @"%1.1f";
         self.lineChart.backgroundColor = [UIColor clearColor];
-        [self.lineChart setXLabels:@[@"t1",@"t2",@"t3",@"t4",@"t5",@"t6",@"t7",@"t8",@"t9",@"t10",@"t11",@"t12",@"t1",@"t2",@"t3",@"t4",@"t5",@"t6",@"t7",@"t8",@"t9",@"t10",@"t11",@"t12"]];
+        [self.lineChart setXLabels:@[@"t1",@"t2",@"t3",@"t4",@"t5",@"t6",@"t7",@"t8",@"t9",@"t10",@"t11",@"t12"]];
         self.lineChart.showCoordinateAxis = YES;
         
         // added an examle to show how yGridLines can be enabled
@@ -72,23 +72,11 @@
                                      @"$$$",
                                      @"$$$",
                                      @"$$$",
-                                     @"$",
-                                     @"$",
-                                     @"$",
-                                     @"$",
-                                     @"$$",
-                                     @"$$",
-                                     @"$$",
-                                     @"$$",
-                                     @"$$$",
-                                     @"$$$",
-                                     @"$$$",
-                                     @"$$$",
                                      ]
          ];
         
         // Line Chart #1
-        NSArray * data01Array = @[@25.0, @50.0, @75.0, @100.0, @125.0, @150.0, @175.0, @200.0, @225.0, @225.0, @250.0, @275.0,@25.0, @50.0, @75.0, @100.0, @125.0, @150.0, @175.0, @200.0, @225.0, @225.0, @250.0, @275.0];
+        NSArray * data01Array = @[@25.0, @50.0, @75.0, @100.0, @125.0, @150.0, @175.0, @200.0, @225.0, @225.0, @250.0, @275.0];
         PNLineChartData *data01 = [PNLineChartData new];
         data01.dataTitle = @"Expenses";
         data01.color = PNFreshGreen;
@@ -103,7 +91,7 @@
         };
         
         // Line Chart #2
-        NSArray * data02Array = @[@50.0, @50.0, @75.0, @75.0, @150.0, @150.0, @225.0, @225.0, @250.0, @275.0, @275.0, @300.0,@50.0, @50.0, @75.0, @75.0, @150.0, @150.0, @225.0, @225.0, @250.0, @275.0, @275.0, @300.0];
+        NSArray * data02Array = @[@50.0, @50.0, @75.0, @75.0, @150.0, @150.0, @225.0, @225.0, @250.0, @275.0, @275.0, @300.0];
         PNLineChartData *data02 = [PNLineChartData new];
         data02.dataTitle = @"Resources";
         data02.color = PNTwitterColor;

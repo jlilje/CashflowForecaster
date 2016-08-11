@@ -95,7 +95,17 @@ NSMutableArray *paymentSeries;
     CashflowEvent *cashflowEvent = [cashflowEventsArray objectAtIndex:indexPath.row];
  
     cell.textLabel.text = cashflowEvent.name;
-
+    
+    if(indexPath.row % 2 == 0)
+    {
+        cell.contentView.backgroundColor = [UIColor colorWithRed:174.0f/255.0f green:255/255.0f blue:200/255.0f alpha:1.0f];
+        cell.backgroundColor = cell.contentView.backgroundColor;
+    }
+    else
+    {
+        cell.contentView.backgroundColor = [UIColor colorWithRed:174/255.0f green:255/255.0f blue:200/255.0f alpha:0.1f];
+        cell.backgroundColor = cell.contentView.backgroundColor;
+    }
     return cell;
 }
 
